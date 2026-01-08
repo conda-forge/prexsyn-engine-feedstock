@@ -13,46 +13,46 @@ source:
 
 build:
   skip:
-    - not linux 
+    - not linux
     - match(python, "<3.11")
   script: |
     mkdir builddir
     $PYTHON -m build -w -n -x -Cbuilddir=builddir
     $PYTHON -m pip install dist/*.whl
-  number: 0
+  number: 1
 
 requirements:
   build:
-  - ${{ compiler('cxx') }}
-  - ${{ stdlib('c') }}
-  - cmake
-  - ninja
+    - ${{ compiler('cxx') }}
+    - ${{ stdlib('c') }}
+    - cmake
+    - ninja
 
   host:
-  - python
-  - pip
-  - setuptools
-  - python-build
-  - rdkit >=${{ rdkit_min_version }}
-  - librdkit-dev >=${{ rdkit_min_version }}
-  - libboost-devel  # run-export: libboost
-  - libboost-python-devel  # run-export: libboost-python
-  - numpy >=2.0.0,<3  # run-export: numpy
-  - eigen
-  - spdlog >=1.15.3,<2
+    - python
+    - pip
+    - setuptools
+    - python-build
+    - rdkit >=${{ rdkit_min_version }}
+    - librdkit-dev >=${{ rdkit_min_version }}
+    - libboost-devel # run-export: libboost
+    - libboost-python-devel # run-export: libboost-python
+    - numpy >=2.0.0,<3 # run-export: numpy
+    - eigen
+    - spdlog >=1.15.3,<2
 
   run:
-  - python
-  - rdkit >=${{ rdkit_min_version }}
+    - python
+    - rdkit >=${{ rdkit_min_version }}
 
   ignore_run_exports:
     from_package:
-    - spdlog
+      - spdlog
 
 tests:
   - python:
       imports:
-      - prexsyn_engine
+        - prexsyn_engine
       pip_check: true
 
 about:
