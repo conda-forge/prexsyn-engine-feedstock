@@ -16,7 +16,7 @@ build:
   skip:
     - not linux
   number: 0
-  script: ${{ PYTHON }} -m pip install . -vv
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   build:
@@ -25,6 +25,8 @@ requirements:
   host:
     - python ${{ python_min }}.*
     - scikit-build-core
+    - cmake
+    - ninja
     - pip
   run:
     - python >=${{ python_min }}
