@@ -1,69 +1,46 @@
+schema_version: 1
+
 context:
-  name: prexsyn-engine
-  version: "0.1.1.dev5"
-  rdkit_min_version: "2025.3.6"
+  python_min: "3.10"
+  version: 1.0.0.dev3
 
 package:
-  name: ${{ name|lower }}
+  name: prexsyn-engine
   version: ${{ version }}
 
 source:
-  url: https://github.com/luost26/prexsyn-engine/archive/v${{ version }}.tar.gz
-  sha256: 5335bdd28fe6110a7b19509a8bd127519ce8f4d75290e8d23853808dabc587f4
+  url: https://pypi.org/packages/source/p/prexsyn-engine/prexsyn_engine-${{ version }}.tar.gz
+  sha256: 9265fe9f1a9e2c0e2e2b5ecfd0eb0ddee521d969f9b42b37b459427b760d8032
 
 build:
   skip:
     - not linux
-    - match(python, "<3.11")
-  script: |
-    mkdir builddir
-    $PYTHON -m build -w -n -x -Cbuilddir=builddir
-    $PYTHON -m pip install dist/*.whl
-  number: 1
+  number: 0
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   build:
     - ${{ compiler('cxx') }}
     - ${{ stdlib('c') }}
-    - cmake
-    - ninja
-
   host:
-    - python
+    - python ${{ python_min }}.*
+    - scikit-build-core
     - pip
-    - setuptools
-    - python-build
-    - rdkit >=${{ rdkit_min_version }}
-    - librdkit-dev >=${{ rdkit_min_version }}
-    - libboost-devel # run-export: libboost
-    - libboost-python-devel # run-export: libboost-python
-    - numpy >=2.0.0,<3 # run-export: numpy
-    - eigen
-    - spdlog >=1.15.3,<2
-
   run:
-    - python
-    - rdkit >=${{ rdkit_min_version }}
-
-  ignore_run_exports:
-    from_package:
-      - spdlog
+    - python >=${{ python_min }}
 
 tests:
   - python:
       imports:
         - prexsyn_engine
       pip_check: true
+      python_version: ${{ python_min }}.*
 
 about:
-  homepage: https://github.com/luost26/prexsyn-engine
-  summary: 'C++ backend library for PrexSyn with Python bindings'
-  description: |
-    PrexSyn Engine is the C++ backend library for PrexSyn.
-    It provides a high-throughput data pipeline that generates synthetic pathways annotated with molecular properties to train PrexSyn models.
-    It also includes a fast detokenizer for reconstructing synthetic pathways and product molecules from model outputs.
   license: MIT
   license_file: LICENSE
+  homepage: https://pypi.org/project/prexsyn-engine/
+  summary: 'C++ backend library for PrexSyn with Python bindings'
   documentation: https://prexsyn.readthedocs.io/
   repository: https://github.com/luost26/prexsyn-engine
 
