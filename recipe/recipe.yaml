@@ -1,7 +1,6 @@
 schema_version: 1
 
 context:
-  python_min: "3.10"
   version: 1.0.0.dev4
 
 package:
@@ -15,7 +14,7 @@ source:
 build:
   skip:
     - not linux
-    - match(python, "<${{ python_min }}")
+    - match(python, "<3.10")
   number: 0
   script: |
     CMAKE_ARGS="-G Ninja -DCMAKE_CXX_COMPILER=${CXX} -DUSE_SYSTEM_BOOST=ON ${CMAKE_ARGS}"
@@ -40,7 +39,6 @@ tests:
       imports:
         - prexsyn_engine
       pip_check: true
-      python_version: ${{ python_min }}.*
 
 about:
   license: MIT
