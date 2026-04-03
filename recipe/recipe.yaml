@@ -28,6 +28,8 @@ requirements:
     - python ${{ python_min }}.*
     - scikit-build-core
     - pip
+    - cmake
+    - ninja
   run:
     - python >=${{ python_min }}
 
