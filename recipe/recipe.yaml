@@ -2,15 +2,15 @@ schema_version: 1
 
 context:
   python_min: "3.10"
-  version: 1.0.0.dev3
+  version: 1.0.0.dev4
 
 package:
   name: prexsyn-engine
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/p/prexsyn-engine/prexsyn_engine-${{ version }}.tar.gz
-  sha256: 9265fe9f1a9e2c0e2e2b5ecfd0eb0ddee521d969f9b42b37b459427b760d8032
+  url: https://github.com/luost26/prexsyn-engine/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: aad79a9e9df11c1973fd3aa9466768e3bf0c2e1e78dad9a5d614566d914923da
 
 build:
   skip:
@@ -18,7 +18,7 @@ build:
     - match(python, "<${{ python_min }}")
   number: 0
   script: |
-    CMAKE_ARGS="-G Ninja -DCMAKE_CXX_COMPILER=${CXX} ${CMAKE_ARGS}"
+    CMAKE_ARGS="-G Ninja -DCMAKE_CXX_COMPILER=${CXX} -DUSE_SYSTEM_BOOST=ON ${CMAKE_ARGS}"
     ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -31,6 +31,7 @@ requirements:
     - python
     - scikit-build-core
     - pip
+    - libboost-devel
   run:
     - python
 
@@ -44,10 +45,10 @@ tests:
 about:
   license: MIT
   license_file: LICENSE
-  homepage: https://pypi.org/project/prexsyn-engine/
-  summary: 'C++ backend library for PrexSyn with Python bindings'
-  documentation: https://prexsyn.readthedocs.io/
+  homepage: https://github.com/luost26/prexsyn-engine
   repository: https://github.com/luost26/prexsyn-engine
+  documentation: https://prexsyn.readthedocs.io/
+  summary: 'C++ backend library for PrexSyn with Python bindings'
 
 extra:
   recipe-maintainers:
