@@ -15,21 +15,24 @@ source:
 build:
   skip:
     - not linux
+    - match(python, "<${{ python_min }}")
   number: 0
-  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  script: |
+    CMAKE_ARGS="-G Ninja -DCMAKE_CXX_COMPILER=${CC} ${CMAKE_ARGS}"
+    ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   build:
     - ${{ compiler('cxx') }}
     - ${{ stdlib('c') }}
-  host:
-    - python ${{ python_min }}.*
-    - scikit-build-core
     - cmake
     - ninja
+  host:
+    - python
+    - scikit-build-core
     - pip
   run:
-    - python >=${{ python_min }}
+    - python
 
 tests:
   - python:
