@@ -22,6 +22,8 @@ requirements:
   build:
     - ${{ compiler('cxx') }}
     - ${{ stdlib('c') }}
+    - cmake
+    - ninja
   host:
     - python ${{ python_min }}.*
     - scikit-build-core
