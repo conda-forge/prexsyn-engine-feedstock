@@ -16,20 +16,16 @@ build:
   skip:
     - not linux
   number: 0
-  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  script: ${{ PYTHON }} -m pip install . -vv
 
 requirements:
   build:
     - ${{ compiler('cxx') }}
     - ${{ stdlib('c') }}
-    - cmake
-    - ninja
   host:
     - python ${{ python_min }}.*
     - scikit-build-core
     - pip
-    - cmake
-    - ninja
   run:
     - python >=${{ python_min }}
 
