@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 1.0.0.dev4
+  version: 1.1.0
 
 package:
   name: prexsyn-engine
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://github.com/luost26/prexsyn-engine/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: aad79a9e9df11c1973fd3aa9466768e3bf0c2e1e78dad9a5d614566d914923da
+  sha256: a6bd8349c2705e80a194f104d863fb9005df427a370690016eb030bcbf2192e3
 
 build:
   skip:
