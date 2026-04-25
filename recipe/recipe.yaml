@@ -15,7 +15,7 @@ build:
   skip:
     - not linux
     - match(python, "<3.10")
-  number: 0
+  number: 1
   script: |
     CMAKE_ARGS="-G Ninja -DCMAKE_CXX_COMPILER=${CXX} -DUSE_SYSTEM_BOOST=ON ${CMAKE_ARGS}"
     ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
