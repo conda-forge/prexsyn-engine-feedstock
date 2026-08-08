@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 1.1.0
+  version: 1.1.1
 
 package:
   name: prexsyn-engine
@@ -9,28 +9,34 @@ package:
 
 source:
   url: https://github.com/luost26/prexsyn-engine/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: a6bd8349c2705e80a194f104d863fb9005df427a370690016eb030bcbf2192e3
+  sha256: cba542c19a035bb690f33436479672889a080dc59eff7c49e4ecb8243d0b92b8
 
 build:
   skip:
-    - not linux
+    - osx and not arm64
     - match(python, "<3.10")
-  number: 2
-  script: |
-    CMAKE_ARGS="-G Ninja -DCMAKE_CXX_COMPILER=${CXX} -DUSE_SYSTEM_BOOST=ON ${CMAKE_ARGS}"
-    ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+  script:
+    - if: unix
+      then: export CMAKE_ARGS="-G Ninja -DCMAKE_CXX_COMPILER=${CXX} -DUSE_SYSTEM_BOOST=ON -DPREXSYN_OPENMP_ROOT=${PREFIX} ${CMAKE_ARGS}"
+    - if: win
+      then: set "CMAKE_ARGS=-G Ninja -DUSE_SYSTEM_BOOST=ON %CMAKE_ARGS%"
+    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   build:
     - ${{ compiler('cxx') }}
     - ${{ stdlib('c') }}
     - cmake
+    - git
     - ninja
   host:
     - python
     - scikit-build-core
     - pip
     - libboost-devel
+    - if: osx
+      then: llvm-openmp
   run:
     - python
 
